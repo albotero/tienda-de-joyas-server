@@ -1,10 +1,15 @@
 import { Router } from "express"
 
-import { getJoyaById, getJoyasController } from "../controllers/tienda-de-joyas.controllers.js"
+import {
+  getJoyaByIdController,
+  getJoyasByFilterController,
+  getJoyasController,
+} from "../controllers/tienda-de-joyas.controllers.js"
 
 const router = Router()
 
-router.get("/joyas/joya/:id", getJoyaById)
 router.get("/joyas", getJoyasController)
+router.get("/joyas/joya/:id", getJoyaByIdController)
+router.get("/joyas/filtros", getJoyasByFilterController)
 
 export default router

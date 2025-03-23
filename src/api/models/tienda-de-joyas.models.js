@@ -5,8 +5,7 @@ const executeQuery = async (sqlQuery) => (await pool.query(sqlQuery))?.rows
 
 export const getJoya = async ({ id }) => {
   const query = format("SELECT * FROM inventario WHERE id = %s", id)
-  const response = await executeQuery(query)
-  return response
+  return await executeQuery(query)
 }
 
 const prepareHATEOAS = async (joyas) => {
@@ -30,6 +29,26 @@ export const getJoyas = async ({ limits = 10, page = 1, order_by: orderBy = "sto
   )
   // Generate Response
   const joyas = await executeQuery(query)
-  const hateoas = await prepareHATEOAS(joyas)
-  return hateoas
+  return await prepareHATEOAS(joyas)
+}
+
+export const getFilteredJoyas = async ({ precio_max: precioMax, precio_min: precioMin, categoria, metal }) => {
+  const filters = []
+  const values = []
+  const addFilter = (column, operator, value) => {
+    filters.push(`${column} ${operator} '%s'`)
+    values.push(value)
+  }
+  // Add requested filters
+  if (precioMax) addFilter("precio", "<=", precioMax)
+  if (precioMin) addFilter("precio", ">=", precioMin)
+  if (categoria) addFilter("categoria", "=", categoria)
+  if (metal) addFilter("metal", "=", metal)
+  // Build query
+  let query = "SELECT * FROM inventario"
+  if (filters.length) {
+    query = format(`${query} WHERE ${filters.join(" AND ")}`, ...values)
+  }
+  // Generate Response
+  return await executeQuery(query)
 }

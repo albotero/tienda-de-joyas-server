@@ -1,4 +1,4 @@
-import { getJoya, getJoyas } from "../models/tienda-de-joyas.models.js"
+import { getFilteredJoyas, getJoya, getJoyas } from "../models/tienda-de-joyas.models.js"
 
 const execute = async ({ res, okCode, callback, args }) => {
   try {
@@ -17,10 +17,18 @@ export const getJoyasController = (req, res) =>
     args: req.query,
   })
 
-export const getJoyaById = (req, res) =>
+export const getJoyaByIdController = (req, res) =>
   execute({
     res,
     okCode: 200,
     callback: getJoya,
     args: req.params,
+  })
+
+export const getJoyasByFilterController = (req, res) =>
+  execute({
+    res,
+    okCode: 200,
+    callback: getFilteredJoyas,
+    args: req.query,
   })
