@@ -3,7 +3,7 @@ import express from "express"
 
 import envs from "./config/envs.js"
 import { resourceNotFoundController } from "./src/api/controllers/notfound.controllers.js"
-import tiendaDeJoyasRoutes from "./src/api/routes/tienda-de-joyas.routers.js"
+import tiendaDeJoyasRoutes from "./src/api/routes/tienda-de-joyas.routes.js"
 
 const { CLIENT_URL, SERVER_PORT, SERVER_URL } = envs
 const whiteList = [SERVER_URL, CLIENT_URL]
