@@ -5,8 +5,8 @@ import envs from "./config/envs.js"
 import { resourceNotFoundController } from "./src/api/controllers/notfound.controllers.js"
 import tiendaDeJoyasRoutes from "./src/api/routes/tienda-de-joyas.routers.js"
 
-const whiteList = [envs.SERVER_URL, envs.CLIENT_URL]
-
+const { CLIENT_URL, SERVER_PORT, SERVER_URL } = envs
+const whiteList = [SERVER_URL, CLIENT_URL]
 const app = express()
 
 const corsOptions = {
@@ -16,13 +16,12 @@ const corsOptions = {
 }
 
 app.use(cors(corsOptions))
-
 app.use(express.json())
 
 app.use("/", tiendaDeJoyasRoutes)
 app.use("*", resourceNotFoundController)
 
-app.listen(envs.SERVER_PORT, () => {
+app.listen(SERVER_PORT, () => {
   console.log(`Server is UP`)
-  console.log(`Listening to Port ${envs.SERVER_PORT}...`)
+  console.log(`Listening to Port ${SERVER_PORT}...`)
 })

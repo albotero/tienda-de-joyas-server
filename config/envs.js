@@ -1,5 +1,5 @@
 import dotenv from "dotenv"
 
-const envs = dotenv.config()
+const { parsed } = dotenv.config()
 
-export default Object.assign({}, envs.parsed)
+export default Object.assign({}, parsed)
